@@ -1,7 +1,13 @@
 <template>
   <!-- pages root -->
-  <NuxtPage class="font-sans" />
+  <NuxtPage />
 </template>
+
+<script setup lang="ts">
+useHead({
+  title: '深大荔枝树地图',
+})
+</script>
 
 <style lang="css">
 body {

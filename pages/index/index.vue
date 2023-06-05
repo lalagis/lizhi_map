@@ -4,109 +4,29 @@
       map-id="base"
       class="absolute inset-0"
       :options="{
-        style: 'mapbox://styles/ddiu8081/ckz82q8eb000c14o8uw4ky79d',
-        center: [113.933, 22.538],
-        zoom: 16
+        style: config.public.MAPBOX_STYLE,
+        center: [113.931, 22.539],
+        zoom: 17,
       }"
-      @load="onMapLoad"
     >
-      <mapbox-layer
-        source-id="points"
-        :source="{
-          type: 'geojson',
-          data: received,
-        }"
-        :layer="{
-          source: 'points',
-          id: 'lizhi-points-layer',
-          type: 'circle',
-          paint: {
-            'circle-color': '#ff0000'
-          }
-        }"
-      />
-      <mapbox-geolocate-control />
-      <mapbox-navigation-control />
+      <points-layer v-if="currentLayer === 'point'" />
+      <geolocate-control />
     </mapbox-map>
+
+    <div class="absolute bottom-10 left-5 w-100">
+      <radios-panel class="relative w-full" />
+    </div>
+
+    <hamburger-menu />
   </div>
 </template>
 
 <script setup lang="ts">
-import { FeatureCollection } from 'geojson';
+import { storeToRefs } from 'pinia';
+import { useGlobalStore } from '~/stores/global';
 
-const received: FeatureCollection = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.93271840674674,
-          22.53762055135546
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.93176890468033,
-          22.539275420395086
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.93255210971074,
-          22.539884843169958
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.92988062953367,
-          22.538715541816885
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.93067456340196,
-          22.53946865229844
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          113.93160797213858,
-          22.5404496716325
-        ],
-        "type": "Point"
-      }
-    }
-  ]
-}
+const config = useRuntimeConfig()
 
-const onMapLoad = (map: mapboxgl.Map) => {
-  console.log('map loaded')
-}
+const store = useGlobalStore()
+const { currentLayer } = $(storeToRefs(store))
 </script>

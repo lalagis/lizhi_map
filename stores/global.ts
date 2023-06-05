@@ -1,13 +1,9 @@
 import { defineStore } from "pinia"
 
 export const useGlobalStore = defineStore('global', () => {
-  let count = $ref(0)
-
-  onMounted(() => {
-    count++
-  })
+  const currentLayer = $ref<'point' | 'linestring' | 'polygon'>('point')
 
   return $$({
-    count,
+    currentLayer,
   })
 })

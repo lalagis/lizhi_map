@@ -1,7 +1,7 @@
 <template>
   <div>
     <mapbox-source 
-      source-id="points-source"
+      source-id="polygons-source"
       :source="{
         type: 'geojson',
         data: collection
@@ -9,14 +9,14 @@
     />
 
     <mapbox-layer
-      v-if="collection && currentLayer === 'point'"
+      v-if="collection && currentLayer === 'polygon'"
       :layer="{
-        id: 'points-layer',
-        source: 'points-source',
-        type: 'symbol',
-        layout: {
-          'icon-image': 'fully',
-          'icon-size': 0.15
+        id: 'polygons-layer',
+        source: 'polygons-source',
+        type: 'fill',
+        paint: {
+          'fill-color': '#ff0000',
+          'fill-opacity': 0.4
         }
       }"
     />
@@ -30,8 +30,8 @@ import { storeToRefs } from 'pinia'
 const store = useGlobalStore()
 const { currentLayer } = $(storeToRefs(store))
 
-const { data } = $(await useFetch('/api/points', {
+const { data } = $(await useFetch('/api/polygons', {
   method: 'GET'
 }))
-const collection = $computed(() => data?.points)
+const collection = $computed(() => data?.polygons)
 </script>

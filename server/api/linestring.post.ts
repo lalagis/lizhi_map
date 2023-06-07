@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { Feature } from 'geojson'
+import { Geometry } from 'geojson'
 
 interface PostLinestringBody {
-  geometry: Feature
+  geometry: Geometry
   reason?: string
 }
 

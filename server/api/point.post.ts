@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-type MatureStatus = 'IMMATURE' | 'PARTIALLY' | 'MATURE' | 'FULLY'
-
 interface PostPointBody {
   lng: number
   lat: number

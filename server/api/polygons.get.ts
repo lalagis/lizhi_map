@@ -4,7 +4,7 @@ import type { Geometry } from 'geojson'
 
 interface PolygonResponse {
   id: number
-  geometry: string // geojson like string
+  polygon: string // geojson like string
 }
 
 export default defineEventHandler(async () => {
@@ -28,7 +28,7 @@ export default defineEventHandler(async () => {
       properties: {
         id: item.id
       },
-      geometry: JSON.parse(item.geometry) as Geometry
+      geometry: JSON.parse(item.polygon) as Geometry
     })
   })
 

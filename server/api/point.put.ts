@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-type MatureStatus = 'IMMATURE' | 'PARTIALLY' | 'MATURE' | 'FULLY'
-
 interface PutPointBody {
   id: number
   lng?: number

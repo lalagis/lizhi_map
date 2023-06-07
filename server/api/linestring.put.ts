@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { Feature } from 'geojson'
+import { Geometry } from 'geojson'
 
 interface PutLinestringBody {
   id: number
   reason?: string
-  geometry?: Feature
+  geometry?: Geometry
 }
 
 export default defineEventHandler(async (event) => {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <mapbox-source 
-      source-id="points-source"
+      source-id="linestrings-source"
       :source="{
         type: 'geojson',
         data: collection
@@ -9,14 +9,17 @@
     />
 
     <mapbox-layer
-      v-if="collection && currentLayer === 'point'"
+      v-if="collection && currentLayer === 'linestring'"
       :layer="{
-        id: 'points-layer',
-        source: 'points-source',
-        type: 'symbol',
+        id: 'linestrings-layer',
+        source: 'linestrings-source',
+        type: 'line',
         layout: {
-          'icon-image': 'fully',
-          'icon-size': 0.15
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#ff0000',
+          'line-width': 5
         }
       }"
     />
@@ -30,8 +33,8 @@ import { storeToRefs } from 'pinia'
 const store = useGlobalStore()
 const { currentLayer } = $(storeToRefs(store))
 
-const { data } = $(await useFetch('/api/points', {
+const { data } = $(await useFetch('/api/linestrings', {
   method: 'GET'
 }))
-const collection = $computed(() => data?.points)
+const collection = $computed(() => data?.linestrings)
 </script>

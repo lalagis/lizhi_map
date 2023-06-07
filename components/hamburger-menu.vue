@@ -1,19 +1,19 @@
 <template>
-  <div class="pie pie1" onclick="document.body.classList.remove('active')">
+  <div class="pie pie1" @click="onSelectedMode('point')">
     <div class="pie-color pie-color1">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="point">
         <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
       </svg>
     </div>
   </div>
-  <div class="pie pie2" onclick="document.body.classList.remove('active')">
+  <div class="pie pie2" @click="onSelectedMode('linestring')">
     <div class="pie-color pie-color2">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="line">
         <path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.28a.75.75 0 01.431.97l-2.28 5.941a.75.75 0 11-1.4-.537l1.63-4.251-1.086.483a11.2 11.2 0 00-5.45 5.174.75.75 0 01-1.199.19L9 12.31l-6.22 6.22a.75.75 0 11-1.06-1.06l6.75-6.75a.75.75 0 011.06 0l3.606 3.605a12.694 12.694 0 015.68-4.973l1.086-.484-4.251-1.631a.75.75 0 01-.432-.97z" clip-rule="evenodd" />
       </svg>
     </div>
   </div>
-  <div class="pie pie3" onclick="document.body.classList.remove('active')">
+  <div class="pie pie3" @click="onSelectedMode('polygon')">
     <div class="pie-color pie-color3">
       <svg class="cart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
         <path
@@ -38,14 +38,20 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useGlobalStore } from '~/stores/global';
+
+const store = useGlobalStore()
+
+const onSelectedMode = (type: ShapeType) => {
+  document.body.classList.remove('active')
+  store.cursor = 'cell'
+  store.insertType = type
+  store.markers = []
+}
+</script>
 
 <style scoped lang="css">
-body {
-  background: #28305a;
-  height: 100vh;
-  margin: 0 20px;
-}
 .pie {
   -webkit-tap-highlight-color: transparent;
   border-radius: 50%;

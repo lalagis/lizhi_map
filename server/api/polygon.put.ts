@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { Feature } from 'geojson'
+import { Geometry } from 'geojson'
 
 interface PutPolygonBody {
   id: number
-  geometry?: Feature
+  geometry?: Geometry
   recommendedRouteId?: number
 }
 

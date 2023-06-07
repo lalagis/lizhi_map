@@ -1,10 +1,12 @@
 import axios from 'axios'
 
+interface PointProperty {
+  matureStatus: MatureStatus
+}
+
 interface Point {
   id: number
-  property: {
-    matureStatus: 'IMMATURE' | 'PARTIALLY' | 'MATURE' | 'FULLY'
-  }
+  property: PointProperty
 }
 
 export default defineEventHandler(async (event) => {

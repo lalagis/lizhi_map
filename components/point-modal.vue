@@ -208,7 +208,7 @@ const onClickUpdate = async () => {
     }
   })
 
-  // await emits('refresh')
+  await emits('refresh')
 }
 
 const onClickDelete = async () => {

@@ -14,7 +14,7 @@
         id: 'editing-layer',
         source: 'editing-layer-source',
         type: layerType,
-        // paint: layerPaint
+        paint: layerPaint
       }"
     />
   </div>
@@ -43,24 +43,29 @@ const layerType = $computed(() => {
   if (props.type === 'linestring') return 'line'
   if (props.type === 'polygon') return 'fill'
 })
-// const layerPaint = $computed(() => {
-//   if (!props.type) return undefined
-//   if (props.type === 'point') return {
-//     'circle-color': '#ff0000',
-//     'circle-size': 10
-//   }
-//   if (props.type === 'linestring') return {
-//     'line-color': '#ff0000',
-//     'line-width': 5
-//   }
-//   if (props.type === 'polygon') return {
-//     'fill-color': '#ff0000',
-//     'fill-opacity': 0.4
-//   }
-// })
 
 const store = useGlobalStore()
 const { markers, insertType } = $(storeToRefs(store))
+
+const layerPaint = $computed(() => {
+  if (!insertType) return undefined
+  if (insertType === 'point') return {
+    'circle-color': '#ff0000',
+    'circle-size': 10
+  }
+  if (insertType === 'linestring') return {
+    'line-color': '#ff0000',
+    'line-width': 5
+  }
+  if (insertType === 'polygon') return {
+    'fill-color': '#ff0000',
+    'fill-opacity': 0.4
+  }
+})
+
+watchEffect(() => {
+  console.log('layerPain', layerPaint)
+})
 
 // make markers lnglat as geojson
 const geojson = $computed<FeatureCollection>(() => {

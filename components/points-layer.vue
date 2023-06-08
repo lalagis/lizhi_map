@@ -20,6 +20,14 @@
         }
       }"
     />
+
+    <point-modal
+      :is-open="showModal"
+      :point-id="currentPointId"
+      :marker="currentMarker"
+      @close="showModal = false"
+      @refresh="refresh"
+    />
   </div>
 </template>
 
@@ -28,10 +36,27 @@ import { useGlobalStore } from '~/stores/global'
 import { storeToRefs } from 'pinia'
 
 const store = useGlobalStore()
-const { currentLayer } = $(storeToRefs(store))
+const { currentLayer, map } = $(storeToRefs(store))
 
-const { data } = $(await useFetch('/api/points', {
+const { data, refresh } = $(await useFetch('/api/point/points', {
   method: 'GET'
 }))
 const collection = $computed(() => data?.points)
+
+let showModal = $ref(false)
+let currentPointId = $ref<number>()
+let currentMarker = $ref<Marker>()
+
+onMounted(() => {
+  if (map) {
+    map.on('click', 'points-layer', (e) => {
+      if (!e.features) return
+      currentPointId = e.features[0].properties?.id
+      currentMarker = {
+        lnglat: e.lngLat.toArray() as [number, number],
+      }
+      showModal = true
+    })
+  }
+})
 </script>

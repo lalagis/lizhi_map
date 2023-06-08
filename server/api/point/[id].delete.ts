@@ -1,21 +1,20 @@
 import axios from 'axios'
 
 export default defineEventHandler(async (event) => {
-  const body: { id: number } = await readBody(event)
-  const { id } = body
+  if (!event.context.params?.id) return { "delete-point": false }
+
+  const id: number = parseInt(event.context.params.id)
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "delete-polygon": false }
   
-  const res = await axios.delete(apiBase + '/polygon' + id.toString(), {
+  const res = await axios.delete(apiBase + '/point/' + id.toString(), {
     headers: {
       'Content-Type': 'application/json'
     },
   })
 
   return {
-    "delete-polygon": res.data as boolean
+    "delete-point": res.data as boolean
   }
 })

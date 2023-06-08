@@ -1,17 +1,9 @@
 import axios from 'axios'
 
-interface Polygon {
-  id: number
-  property: PolygonProperty
-}
-
-interface PolygonProperty {
-  recommendedRouteId: number
-}
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  const id: number = body.id
+  if (!event.context.params?.id) return { "polygon": undefined }
+
+  const id: number = parseInt(event.context.params.id)
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL

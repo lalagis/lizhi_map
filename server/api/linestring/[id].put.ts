@@ -2,21 +2,22 @@ import axios from 'axios'
 import { Geometry } from 'geojson'
 
 interface PutLinestringBody {
-  id: number
   reason?: string
   geometry?: Geometry
 }
 
 export default defineEventHandler(async (event) => {
-  const body: PutLinestringBody = await readBody(event)
-  const { id, reason, geometry } = body
+  if (!event.context.params?.id) return { "put-linestring": false }
+
+  const id: number = parseInt(event.context.params.id)
+
+  const request: { body: PutLinestringBody } = await readBody(event)
+  const { reason, geometry } = request.body
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "put-linestring": false }
   
-  const res = await axios.put(apiBase + '/linestring' + id.toString(), {
+  const res = await axios.put(apiBase + '/linestring/' + id.toString(), {
     headers: {
       'Content-Type': 'application/json'
     },

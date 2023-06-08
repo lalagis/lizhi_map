@@ -1,22 +1,23 @@
 import axios from 'axios'
 
 interface PutPointBody {
-  id: number
   lng?: number
   lat?: number
   matureStatus?: MatureStatus
 }
 
 export default defineEventHandler(async (event) => {
-  const body: PutPointBody = await readBody(event)
-  const { id, lng, lat, matureStatus } = body
+  if (!event.context.params?.id) return { "put-point": false }
+
+  const id: number = parseInt(event.context.params.id)
+
+  const request: { body: PutPointBody } = await readBody(event)
+  const { lng, lat, matureStatus } = request.body
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "put-point": false }
   
-  const res = await axios.put(apiBase + '/point' + id.toString(), {
+  const res = await axios.put(apiBase + '/point/' + id.toString(), {
     headers: {
       'Content-Type': 'application/json'
     },

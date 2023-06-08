@@ -5,6 +5,7 @@ import type { Geometry } from 'geojson'
 interface PointResponse {
   id: number
   location: string // geojson like string
+  property: string // as json
 }
 
 export default defineEventHandler(async () => {
@@ -23,10 +24,14 @@ export default defineEventHandler(async () => {
   })
 
   res.data.collection.forEach((item: PointResponse) => {
+    const { likes, matureStatus } = JSON.parse(item.property)
+
     collection.features.push({
       type: 'Feature',
       properties: {
-        id: item.id
+        id: item.id,
+        likes,
+        matureStatus
       },
       geometry: JSON.parse(item.location) as Geometry
     })

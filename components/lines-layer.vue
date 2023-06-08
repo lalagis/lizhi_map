@@ -33,7 +33,7 @@ import { storeToRefs } from 'pinia'
 const store = useGlobalStore()
 const { currentLayer } = $(storeToRefs(store))
 
-const { data } = $(await useFetch('/api/linestrings', {
+const { data } = $(await useFetch('/api/linestring/linestrings', {
   method: 'GET'
 }))
 const collection = $computed(() => data?.linestrings)

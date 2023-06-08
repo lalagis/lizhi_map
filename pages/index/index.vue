@@ -59,7 +59,7 @@ const onClick = async (event: MapMouseEvent) => {
         lnglat: [lng, lat],
       })
 
-      await useFetch('/api/point', {
+      await useFetch('/api/point/:id', {
         method: 'POST',
         body: {
           lng,

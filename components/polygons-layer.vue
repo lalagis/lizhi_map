@@ -30,7 +30,7 @@ import { storeToRefs } from 'pinia'
 const store = useGlobalStore()
 const { currentLayer } = $(storeToRefs(store))
 
-const { data } = $(await useFetch('/api/polygons', {
+const { data } = $(await useFetch('/api/polygon/polygons', {
   method: 'GET'
 }))
 const collection = $computed(() => data?.polygons)

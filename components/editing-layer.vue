@@ -76,7 +76,7 @@ const onClickStopDraw = async () => {
   if (props.type === 'point') return
 
   if (props.type === 'linestring') {
-    await useFetch('/api/linestring', {
+    await useFetch('/api/linestring/:id', {
       method: 'POST',
       body: {
         geometry: geojson.features[0].geometry,
@@ -86,16 +86,21 @@ const onClickStopDraw = async () => {
 
     store.insertType = undefined
     store.cursor = 'grab'
+    store.currentLayer = 'linestring'
   }
 
   if (props.type === 'polygon') {
-    await useFetch('/api/polygon', {
+    await useFetch('/api/polygon/:id', {
       method: 'POST',
       body: {
         geometry: geojson.features[0].geometry,
         recommendedRouteId: undefined
       }
     })
+
+    store.insertType = undefined
+    store.cursor = 'grab'
+    store.currentLayer = 'polygon'
   }
 }
 </script>

@@ -1,22 +1,12 @@
 import axios from 'axios'
 
-interface PointProperty {
-  matureStatus: MatureStatus
-}
-
-interface Point {
-  id: number
-  property: PointProperty
-}
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  const id: number = body.id
+  if (!event.context.params?.id) return { "point": undefined }
+
+  const id: number = parseInt(event.context.params.id)
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "point": undefined }
   
   const res = await axios.get(apiBase + '/point/' + id.toString(), {
     headers: {

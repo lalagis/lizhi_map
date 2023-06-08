@@ -2,21 +2,22 @@ import axios from 'axios'
 import { Geometry } from 'geojson'
 
 interface PutPolygonBody {
-  id: number
   geometry?: Geometry
   recommendedRouteId?: number
 }
 
 export default defineEventHandler(async (event) => {
-  const body: PutPolygonBody = await readBody(event)
-  const { id, geometry, recommendedRouteId } = body
+  if (!event.context.params?.id) return { "put-polygon": false }
+
+  const id: number = parseInt(event.context.params.id)
+
+  const request: { body: PutPolygonBody } = await readBody(event)
+  const { geometry, recommendedRouteId } = request.body
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "put-polygon": false }
   
-  const res = await axios.put(apiBase + '/polygon' + id.toString(), {
+  const res = await axios.put(apiBase + '/polygon/' + id.toString(), {
     headers: {
       'Content-Type': 'application/json'
     },

@@ -1,27 +1,12 @@
 import axios from 'axios'
 
-interface Polygon {
-  id: number
-}
-
-interface LinestringProperty {
-  reason: string
-  relatedPolygons: Polygon[]
-}
-
-interface Linestring {
-  id: number
-  property: LinestringProperty
-}
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  const id: number = body.id
+  if (!event.context.params?.id) return { "linestring": undefined }
+
+  const id: number = parseInt(event.context.params.id)
 
   const config = useRuntimeConfig()
   const apiBase = config.public.API_URL
-
-  if (!id) return { "linestring": undefined }
   
   const res = await axios.get(apiBase + '/linestring/' + id.toString(), {
     headers: {

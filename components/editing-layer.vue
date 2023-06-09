@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { FeatureCollection } from 'geojson';
-import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '~/stores/global';
+import { FeatureCollection } from 'geojson'
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '~/stores/global'
 
 const props = defineProps<{
   type?: ShapeType
@@ -61,10 +61,6 @@ const layerPaint = $computed(() => {
     'fill-color': '#ff0000',
     'fill-opacity': 0.4
   }
-})
-
-watchEffect(() => {
-  console.log('layerPain', layerPaint)
 })
 
 // make markers lnglat as geojson

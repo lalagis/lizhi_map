@@ -19,7 +19,7 @@ export const points2Geojson = (
           coordinates: item.lnglat
         },
       }))
-      break;
+      break
 
     case 'linestring':
       result.features = [{
@@ -30,7 +30,7 @@ export const points2Geojson = (
           coordinates: data.map(item => item.lnglat)
         },
       }]
-      break;
+      break
 
     case 'polygon':
       result.features = [{
@@ -41,7 +41,7 @@ export const points2Geojson = (
           coordinates: [data.map(item => item.lnglat)]
         },
       }]
-      break;
+      break
   }
 
 

@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { useGlobalStore } from '~/stores/global';
+import { useGlobalStore } from '~/stores/global'
 
 const store = useGlobalStore()
 

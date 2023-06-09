@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '~/stores/global';
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '~/stores/global'
 
 const store = useGlobalStore()
 const { markers } = $(storeToRefs(store))

@@ -32,9 +32,9 @@
 </template>
 
 <script setup lang="ts">
-import { MapMouseEvent } from 'mapbox-gl';
-import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '~/stores/global';
+import { MapMouseEvent } from 'mapbox-gl'
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '~/stores/global'
 
 const config = useRuntimeConfig()
 

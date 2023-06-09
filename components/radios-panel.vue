@@ -58,7 +58,8 @@ import {
   RadioGroupDescription,
   RadioGroupOption,
 } from '@headlessui/vue'
-import { useGlobalStore } from '~/stores/global';
+import { useGlobalStore } from '~/stores/global'
+import { storeToRefs } from 'pinia';
 
 interface RadioItem {
   title: string
@@ -66,7 +67,7 @@ interface RadioItem {
   icon: string
 }
 
-const list: RadioItem[] = [
+const list = $ref<RadioItem[]>([
   {
     title: '所有的荔枝树',
     description: '搜索所有的荔枝树展示为点图层',
@@ -82,13 +83,19 @@ const list: RadioItem[] = [
     description: '所有荔枝林区域构成面图层',
     icon: '🏕️'
   }
-]
+])
 
-const selected = $ref(list[0])
+let selected = $ref<RadioItem | undefined>(list[0])
 
 const store = useGlobalStore()
+const { currentLayer } = $(storeToRefs(store))
+
+watchEffect(() => {
+  if (currentLayer === 'nearest') selected = undefined
+})
 
 watch(() => selected, () => {
+  if (!selected) return
   switch (selected.title) {
     case '所有的荔枝树':
       if (store.currentLayer !== 'point') store.currentLayer = 'point'

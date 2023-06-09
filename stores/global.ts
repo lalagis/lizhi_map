@@ -4,7 +4,7 @@ import { FullyPNG, MaturePNG, PartiallyPNG, ImmaturePNG } from "~/assets"
 export const useGlobalStore = defineStore('global', () => {
   const map = $(useMapboxInstance('base'))
 
-  const currentLayer = $ref<ShapeType>('point')
+  const currentLayer = $ref<ShapeType | 'nearest'>('point')
 
   const cursor = $ref<'default' | 'cell' | 'grab'>('grab')
 

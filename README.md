@@ -9,6 +9,8 @@ source venv/bin/activate
 ## install requirements
 pip install -r requirements.txt
 
+## edit .env db url like .env.example
+
 ## after update schema.prisma (if needed)
 prisma db push
 

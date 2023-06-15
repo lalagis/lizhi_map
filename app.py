@@ -280,11 +280,11 @@ async def update_polygon(request: Request):
 async def delete_point(request: Request):
     try:
         id = int(request.path_params["id"])
-        await prisma.point.delete_many(where={
-            "id": id
-        })
         await prisma.pointproperty.delete_many(where={
             "pointId": id
+        })
+        await prisma.point.delete_many(where={
+            "id": id
         })
         return True
     except (KeyError, ValueError) as e:
@@ -296,11 +296,11 @@ async def delete_point(request: Request):
 async def delete_linestring(request: Request):
     try:
         id = int(request.path_params["id"])
-        await prisma.linestring.delete_many(where={
-            "id": id
-        })
         await prisma.linestringproperty.delete_many(where={
             "linestringId": id
+        })
+        await prisma.linestring.delete_many(where={
+            "id": id
         })
         return True
     except (KeyError, ValueError) as e:

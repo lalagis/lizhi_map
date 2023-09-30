@@ -9,11 +9,4 @@ dist
 .DS_Store
 .fleet
 .idea
-# venv
 .venv
-
-# mac
-.DS_Store
-
-# env
-.env

@@ -1,0 +1,66 @@
+// generator
+generator py {
+  provider = "prisma-client-py"
+  recursive_type_depth = -1
+}
+
+// databse
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+// models
+model Point {
+  id Int @id @default(autoincrement())
+  location Unsupported("geography(Point, 4326)")
+  property PointProperty?
+
+  @@index([location], name: "location_index", type: Gist)
+}
+
+model Linestring {
+  id Int @id @default(autoincrement())
+  geometry Unsupported("geometry(Linestring, 4326)")
+  property LinestringProperty?
+
+  relatedPolygon Polygon[]
+  
+  @@index([geometry], name: "linestring_index", type: Gist)
+}
+
+model Polygon {
+  id Int @id @default(autoincrement())
+  geometry Unsupported("geometry(Polygon, 4326)")
+
+  recommendedRoute Linestring? @relation(fields: [recommendedRouteId], references: [id])
+  recommendedRouteId Int?
+
+  @@index([geometry], name: "polygon_index", type: Gist)
+}
+
+// PointProperty
+model PointProperty {
+  id Int @id @default(autoincrement())
+  likes Int? @default(0)
+  matureStatus MatureStatus? @default(IMMATURE)
+
+  point Point @relation(fields: [pointId], references: [id])
+  pointId Int @unique
+}
+
+enum MatureStatus {
+  IMMATURE
+  PARTIALLY
+  MATURE
+  FULLY
+}
+
+// LinestringProperty
+model LinestringProperty {
+  id Int @id @default(autoincrement())
+  reason String? @db.VarChar(100) @default("") 
+
+  linestring Linestring @relation(fields: [linestringId], references: [id])
+  linestringId Int @unique
+}
